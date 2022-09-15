@@ -1,27 +1,18 @@
-import { Link, useOutletContext } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import { comparePrice, compareTitle } from '../sort-utils/Sort.js'
+
 
 const AllProducts = () => {
     const { sorted } = useOutletContext();
-    const [type, setType] = useState('Title');
-    // const [sorted, setSorted] = useState([])
-
-    // let sortedFunction = (type) => {
-    //     if(type === 'Title') {
-    //         setSorted (products.sort(compareTitle))
-    //     }
-    
-    //     else {
-    //         setSorted (products.sort(comparePrice))
-    //     }
-    // }
+    const navigate = useNavigate();
 
     const deleteProduct = (id) => {
         axios
             .delete(`http://localhost:8000/api/products/${id}`)
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res)
+                navigate('/products');
+            })
             .catch((err) => console.log(err));
     };
 
@@ -33,21 +24,7 @@ const AllProducts = () => {
                     <h5 className="col-2 row p-0 m-0 d-flex justify-content-center align-items-center">Price</h5>
                     <h5 className="col row p-0 m-0 d-flex justify-content-center align-items-center">Description</h5>
                     <h5 className="col-1 row p-0 m-0 d-flex justify-content-center align-items-center"></h5>
-                    <h5 className="col-1 row m-0 d-flex justify-content-center align-items-center">
-                        {/* <select
-                            name="type"
-                            id="type"
-                            className="form-select" 
-                            value={type}
-                            onChange={((event) => {
-                                setType(event.target.value);
-                                // sortedFunction(event.target.value)
-                            })}
-                        >
-                            <option value="Price">Price</option>
-                            <option value="Title">Title</option>
-                        </select> */}
-                    </h5>
+                    <h5 className="col-1 row m-0 d-flex justify-content-center align-items-center"></h5>
                 </div>
             </div>
             {sorted &&
